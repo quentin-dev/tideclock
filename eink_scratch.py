@@ -25,7 +25,7 @@ draw = ImageDraw.Draw(image)
 
 # draw.text((120, 60), "Kdo pour Papa", fill = 0)
 
-draw.text((0, 60), weather.weather.get_tide_from_meteofrance()[0], fill = 0)
+draw.text((0, 60), weather.get_tides_from_meteofrance()[0], fill = 0)
 
 # draw.rectangle([(0, 0), (50, 50)], outline = 0)
 epd.display(epd.getbuffer(image))

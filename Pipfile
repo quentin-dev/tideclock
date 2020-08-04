@@ -12,6 +12,5 @@ selenium = "*"
 lxml = "*"
 spidev = "*"
 "rpi.gpio" = "*"
-
-[requires]
-python_version = "3.7"
+numpi = "*"
+pillow = "*"

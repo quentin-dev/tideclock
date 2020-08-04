@@ -1,0 +1,1 @@
+from .weather import get_tides_from_meteofrance
