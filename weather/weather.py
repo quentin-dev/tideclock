@@ -7,9 +7,12 @@ import constants
 
 def get_tide_from_meteofrance():
 
-    options = webdriver.FirefoxOptions()
+    # options = webdriver.FirefoxOptions()
+    options = webdriver.ChromeOptions()
     options.headless = True
-    driver = webdriver.Firefox(options = options)
+    
+    # driver = webdriver.Firefox(options = options)
+    driver = webdriver.Chrome(options = options)
 
     driver.get(constants.METEOFRANCE_URL)
 
@@ -21,3 +24,5 @@ def get_tide_from_meteofrance():
     entries = soup.find_all('tr')[1:]
 
     return [ et.get_text() for et in entries ]
+
+print(get_tide_from_meteofrance())

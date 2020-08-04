@@ -9,6 +9,8 @@ import time
 from waveshare_epd import epd2in13_V2
 from PIL import Image, ImageDraw, ImageFont
 
+import weather
+
 logging.basicConfig(level=logging.DEBUG)
 
 logging.info("eink scratch")
@@ -21,7 +23,9 @@ epd.Clear(0xFF)
 image = Image.new('1', (epd.height, epd.width), 255)
 draw = ImageDraw.Draw(image)
 
-draw.text((120, 60), "Kdo pour Papa", fill = 0)
+# draw.text((120, 60), "Kdo pour Papa", fill = 0)
+
+draw.text((0, 60), weather.weather.get_tide_from_meteofrance()[0], fill = 0)
 
 # draw.rectangle([(0, 0), (50, 50)], outline = 0)
 epd.display(epd.getbuffer(image))
