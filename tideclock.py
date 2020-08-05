@@ -4,13 +4,9 @@ import sys
 # import os
 import logging
 # import traceback
-# import time
-
+import time
 import weather
-
 import argparse
-
-# from display import Display
 
 if __name__ == '__main__':
 
@@ -38,6 +34,7 @@ if __name__ == '__main__':
     if args.dry_run:
         sys.exit()
 
+    # An attempt at something, will probably be moved with the other imports
     from display import Display
 
     loglevel = logging.ERROR if args.mode == 'production' else logging.DEBUG
@@ -51,4 +48,6 @@ if __name__ == '__main__':
     
     display.epd_clear()
     display.epd_display_text(text[0])
+    time.sleep(10)
+    display.epd_clear()
 
