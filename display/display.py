@@ -1,7 +1,6 @@
-
 import logging
 
-from waveshare_epd import epd2in13_V2
+from .waveshare_epd import epd2in13_V2
 from PIL import Image, ImageDraw#, ImageFont
 
 class Display:

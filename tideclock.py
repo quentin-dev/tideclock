@@ -5,7 +5,6 @@ import sys
 import logging
 # import traceback
 import time
-import weather
 import argparse
 
 if __name__ == '__main__':
@@ -35,19 +34,17 @@ if __name__ == '__main__':
         sys.exit()
 
     # An attempt at something, will probably be moved with the other imports
-    from display import Display
+    import display
 
     loglevel = logging.ERROR if args.mode == 'production' else logging.DEBUG
 
     logging.basicConfig(level = loglevel)
     logging.info("Starting tideclock")
 
-    text = weather.get_tides_from_meteofrance()
-
-    display = Display()
+    display = display.Display()
     
     display.epd_clear()
-    display.epd_display_text(text[0])
+    display.epd_display_text("This is a test")
     time.sleep(10)
     display.epd_clear()
 
