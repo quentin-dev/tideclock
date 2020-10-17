@@ -12,38 +12,50 @@ class Display:
         logging.info("Initialized Display EPD")
 
     def epd_clear(self):
+        """Clear the e-ink display"""
         logging.info("Clearing Display EPD")
         self.epd.init(self.epd.FULL_UPDATE)
+        self.epd.Clear(0x00)
         self.epd.Clear(0xFF)
 
     def epd_sleep(self):
+        """Put e-ink display to sleep"""
         logging.info("Putting Display EPD to sleep")
         self.epd.sleep()
 
     def epd_display_text(self, text):
+        """Display given text centered on the e-ink display"""
         image = Image.new("1", (self.epd.height, self.epd.width), 255)
         draw = ImageDraw.Draw(image)
 
         font = ImageFont.truetype("fonts/Roboto-Bold.ttf", 18)
 
-        draw.text((0, self.epd.width // 2), text, fill=0, font=font)
+        w, h = draw.textsize(text, font=font)
+
+        draw.text(
+            ((self.epd.height - w) // 2, (self.epd.width - h) // 2),
+            text,
+            fill=0,
+            font=font,
+        )
         self.epd.display(self.epd.getbuffer(image))
 
+    def epd_display(self, subtitle, title="Prochaine marée :", fontSize=24):
+        """Display title and subtitle centered on the e-ink display"""
 
-"""
-image = Image.new('1', (epd.height, epd.width), 255)
-draw = ImageDraw.Draw(image)
+        image = Image.new("1", (self.epd.height, self.epd.width), 255)
+        draw = ImageDraw.Draw(image)
 
-# draw.text((120, 60), "Kdo pour Papa", fill = 0)
+        font = ImageFont.truetype("fonts/Roboto-Bold.ttf", fontSize)
 
-draw.text((0, 60), weather.get_tides_from_meteofrance()[0], fill = 0)
+        titleW, titleH = draw.textsize(title, font=font)
+        subW, subH = draw.textsize(subtitle, font=font)
 
-# draw.rectangle([(0, 0), (50, 50)], outline = 0)
-epd.display(epd.getbuffer(image))
-# time.sleep(10)
+        baseH = (self.epd.width - (titleH + subH)) // 2
 
-logging.info("Clear")
-# epd.init(epd.FULL_UPDATE)
-# epd.Clear(0xFF)
-# epd.sleep()
-"""
+        draw.text(((self.epd.height - titleW) // 2, baseH), title, fill=0, font=font)
+        draw.text(
+            ((self.epd.height - subW) // 2, baseH + titleH), subtitle, fill=0, font=font
+        )
+
+        self.epd.display(self.epd.getbuffer(image))
