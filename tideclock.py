@@ -6,6 +6,8 @@ import logging
 import sys
 import time
 from datetime import date, datetime
+from datetime import time as dttime
+from datetime import timedelta
 from enum import Enum
 from typing import List, Tuple
 
@@ -33,7 +35,7 @@ def getRowFromCSV(filename: str, rowNum: int) -> List[str]:
     return rows[0]
 
 
-def getNextEvent(data: List[str], today) -> Tuple[str, datetime.time]:
+def getNextEvent(data: List[str], tomorrow=False) -> Tuple[str, datetime.time]:
     """Get the next high / low tide event"""
 
     valid = []
@@ -54,11 +56,11 @@ def getNextEvent(data: List[str], today) -> Tuple[str, datetime.time]:
 
     valid.sort(key=lambda x: x[1])
 
-    current = datetime.now().time()
+    # If the next event is tomorrow set the current time to midnight
+
+    current = dttime(0, 0, 0) if tomorrow else datetime.now().time()
 
     upcoming = [elt for elt in valid if elt[1] >= current]
-
-    # FIXME: Does not account for the case where the next event is tomorrow
 
     return upcoming[0]
 
@@ -77,17 +79,32 @@ def getData(today) -> List[str]:
 def getNextEventForToday() -> Tuple[str, datetime.time]:
     """Get next high / low tide event for today"""
 
-    today = date.today()
-    data = getData(today)
+    try:
 
-    return getNextEvent(data, today)
+        today = date.today()
+        data = getData(today)
+
+        logging.info(f"Going to get next event for {today}")
+
+        return getNextEvent(data)
+
+    except IndexError:
+
+        logging.info(f"The last event of {today} has passed")
+
+        tomorrow = today + timedelta(days=1)
+        data = getData(tomorrow)
+
+        logging.info(f"Going to get earliest event of {tomorrow}")
+
+        return getNextEvent(data, True)
 
 
 def eventToString(event: Tuple[str, datetime.time]) -> str:
 
-    tideType = "basse" if event[0][:2] == "LT" else "haute"
+    tideType = "BASSE" if event[0][:2] == "LT" else "HAUTE"
 
-    return f"Prochaine marée {tideType} à {event[1].strftime('%Hh%M')}"
+    return f"Prochaine marée :\n{tideType} à {event[1].strftime('%Hh%M')}"
 
 
 if __name__ == "__main__":
@@ -127,6 +144,6 @@ if __name__ == "__main__":
     display = display.Display()
 
     display.epd_clear()
-    display.epd_display_text(eventString)
+    display.epd_display_text("Prochaine marée")
     time.sleep(10)
     display.epd_clear()

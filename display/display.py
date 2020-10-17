@@ -1,6 +1,6 @@
 import logging
 
-from PIL import Image, ImageDraw  # , ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 from .waveshare_epd import epd2in13_V2
 
@@ -24,7 +24,9 @@ class Display:
         image = Image.new("1", (self.epd.height, self.epd.width), 255)
         draw = ImageDraw.Draw(image)
 
-        draw.text((0, self.epd.width // 2), text, fill=0)
+        font = ImageFont.truetype("fonts/Roboto-Bold.ttf", 18)
+
+        draw.text((0, self.epd.width // 2), text, fill=0, font=font)
         self.epd.display(self.epd.getbuffer(image))
 
 
