@@ -174,7 +174,3 @@ if __name__ == "__main__":
         logging.info(f"Going to sleep for {ttw} seconds")
 
         time.sleep(ttw)
-
-        # time.sleep(10)
-        # display.epd_sleep()
-        # display.epd_clear()
