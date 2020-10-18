@@ -9,6 +9,7 @@ from datetime import date, datetime
 from datetime import time as dttime
 from datetime import timedelta
 from enum import Enum
+from pathlib import Path
 from typing import List, Tuple
 
 import display
@@ -69,7 +70,7 @@ def getData(today) -> List[str]:
     """Get TideData for a given date"""
 
     ndx = today.toordinal() - date(today.year, 1, 1).toordinal() + 1
-    row = getRowFromCSV(f"data/{today.year}.csv", ndx)
+    row = getRowFromCSV(Path(__file__).parent / f"data/{today.year}.csv", ndx)
 
     logging.debug(f"Got row {row}")
 
@@ -146,6 +147,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=loglevel)
     logging.info("Starting tideclock")
 
+    display = display.Display()
+
     while True:
 
         event = getNextEventForToday()
@@ -158,8 +161,6 @@ if __name__ == "__main__":
 
             logging.info(f"Got event string '{eventString}'")
             sys.exit()
-
-        display = display.Display()
 
         display.epd_clear()
         display.epd_display(eventString)

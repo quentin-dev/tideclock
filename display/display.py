@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -28,7 +29,9 @@ class Display:
         image = Image.new("1", (self.epd.height, self.epd.width), 255)
         draw = ImageDraw.Draw(image)
 
-        font = ImageFont.truetype("fonts/Roboto-Bold.ttf", 18)
+        font = ImageFont.truetype(
+            str(Path(__file__).parent / "fonts/Roboto-Bold.ttf"), 18
+        )
 
         w, h = draw.textsize(text, font=font)
 
@@ -46,7 +49,9 @@ class Display:
         image = Image.new("1", (self.epd.height, self.epd.width), 255)
         draw = ImageDraw.Draw(image)
 
-        font = ImageFont.truetype("fonts/Roboto-Bold.ttf", fontSize)
+        font = ImageFont.truetype(
+            str(Path(__file__).parent / "fonts/Roboto-Bold.ttf"), fontSize
+        )
 
         titleW, titleH = draw.textsize(title, font=font)
         subW, subH = draw.textsize(subtitle, font=font)
