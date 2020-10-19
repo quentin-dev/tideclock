@@ -5,7 +5,8 @@ on RPi Zero (W)
 
 ## Warning
 
-This utility is made to be used with an RPi Zero (W) and a Waveshare e-ink display, so it will probably not work on any other hardware
+This utility is made to be used with an RPi Zero (W) and a Waveshare e-ink
+display, so it will probably not work on any other hardware
 
 ## Development
 
@@ -22,10 +23,10 @@ provide a fully functional development environment.
 
 ## Options
 
-|    Name     | Short Option |         Long Option          |            Description             | Default Value |
-|:-----------:|:------------:|:----------------------------:|:----------------------------------:|:-------------:|
-|    Help     |     `-h`     |           `--help`           |       Shows help information       |     NONE      |
-|    Mode     |     NONE     | `--mode {debug, production}` |         Sets logging level         |    `debug`    |
-| Dry Run | NONE  |      `--dry-run`       | Displays data in INFO log and exits | NONE  |
-| Demo | NONE | `--demo` | Displays data to screen, then wait, clear, and exit | NONE |
-| Time To Wait | NONE | `--ttw TTW` | Sets time to wait, only taken into account in demo mode | `10` |
+|     Name     | Short Option |         Long Option          |                       Description                       | Default Value |
+|:------------:|:------------:|:----------------------------:|:-------------------------------------------------------:|:-------------:|
+|     Help     |     `-h`     |           `--help`           |                 Shows help information                  |     NONE      |
+|     Mode     |     NONE     | `--mode {debug, production}` |                   Sets logging level                    |    `debug`    |
+|   Dry Run    |     NONE     |         `--dry-run`          |           Displays data in INFO log and exits           |     NONE      |
+|     Demo     |     NONE     |           `--demo`           |   Displays data to screen, then wait, clear, and exit   |     NONE      |
+| Time To Wait |     NONE     |         `--ttw TTW`          | Sets time to wait, only taken into account in demo mode |     `10`      |
